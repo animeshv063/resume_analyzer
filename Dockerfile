@@ -1,8 +1,11 @@
-FROM python:3.10
+FROM python:3.10-slim
 
 WORKDIR /app
-COPY . .
 
-RUN pip install -r requirements.txt
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
 
 CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
