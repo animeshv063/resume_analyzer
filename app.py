@@ -31,7 +31,6 @@ if st.button('Analyze'):
     if resume.strip() == '' or job.strip() == '':
         st.warning('Please fill both fields')
     else:
-<<<<<<< Updated upstream
         resume_words = preprocess(resume)
         job_words = preprocess(job)
 
@@ -44,7 +43,7 @@ if st.button('Analyze'):
 
         st.progress(int(score))
 
-        st.write(f'**Match Score:** {round(score, 2)}%')
+        st.write(f'Match Score: {round(score, 2)}%')
 
         if score > 70:
             st.success('Strong Match ✅')
@@ -58,12 +57,3 @@ if st.button('Analyze'):
 
         st.subheader('❌ Missing Keywords')
         st.write(missing)
-=======
-        st.error("Low Match ❌")
-
-
-#docker run -p 8501:8501 resume-analyzer
-#NLP (Natural Language Processing) 
-#Keyword matching algorithm  
-#http://localhost:8501
->>>>>>> Stashed changes
