@@ -19,7 +19,7 @@ if st.button('Analyze'):
         st.warning('Please fill both fields')
     else:
         response = requests.post(
-            'http://backend:8000/analyze',
+            'http://127.0.0.1:8000/analyze',
             json={'resume': resume, 'job': job}
         )
 
