@@ -2,7 +2,9 @@ import streamlit as st
 import sys
 import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# make backend visible
+sys.path.insert(0, os.getcwd())
+
 from backend.utils import analyze_resume
 
 st.set_page_config(page_title='AI Resume Analyzer', layout='wide')
