@@ -8,12 +8,14 @@ st.set_page_config(page_title='AI Resume Analyzer', layout='wide')
 st.title('📄 AI Resume Analyzer')
 st.write('Smart comparison using NLP (TF-IDF + Cosine Similarity)')
 
+# 🔹 Clean + filter words
 def preprocess(text):
     text = text.lower()
     words = re.findall(r'\b[a-zA-Z]+\b', text)
-    words = [w for w in words if w not in ENGLISH_STOP_WORDS]
+    words = [w for w in words if w not in ENGLISH_STOP_WORDS and len(w) > 2]
     return set(words)
 
+# 🔹 Better similarity with phrases
 def get_similarity(resume, job):
     tfidf = TfidfVectorizer(stop_words='english', ngram_range=(1,2))
     vectors = tfidf.fit_transform([resume, job])
@@ -44,15 +46,15 @@ if st.button('Analyze'):
         st.progress(int(score))
         st.write(f'Match Score: {round(score, 2)}%')
 
-        if score > 70:
+        if score > 75:
             st.success('Strong Match ✅')
-        elif score > 40:
+        elif score > 45:
             st.warning('Average Match ⚠️')
         else:
             st.error('Low Match ❌')
 
         st.subheader('✅ Matched Keywords')
-        st.write(matched)
+        st.write(sorted(matched))
 
         st.subheader('❌ Missing Keywords')
-        st.write(missing)
+        st.write(sorted(missing))
