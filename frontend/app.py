@@ -1,10 +1,10 @@
 import streamlit as st
-import requests
+from backend.utils import analyze_resume
 
 st.set_page_config(page_title='AI Resume Analyzer', layout='wide')
 
 st.title('📄 AI Resume Analyzer')
-st.write('Frontend connected to backend API')
+st.write('Smart comparison using NLP (TF-IDF + Cosine Similarity)')
 
 col1, col2 = st.columns(2)
 
@@ -18,23 +18,13 @@ if st.button('Analyze'):
     if resume.strip() == '' or job.strip() == '':
         st.warning('Please fill both fields')
     else:
-        response = requests.post(
-            'http://127.0.0.1:8000/analyze',
-            json={'resume': resume, 'job': job}
-        )
-
-        data = response.json()
-
-        score = data['score']
-        matched = data['matched']
-        missing = data['missing']
+        score, matched, missing = analyze_resume(resume, job)
 
         st.subheader('📊 Results')
 
         st.progress(int(score))
         st.write(f'Match Score: {round(score,2)}%')
 
-        # 🔥 THIS WAS MISSING
         if score > 75:
             st.success('Strong Match ✅')
         elif score > 45:
