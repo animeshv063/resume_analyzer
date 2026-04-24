@@ -34,6 +34,14 @@ if st.button('Analyze'):
         st.progress(int(score))
         st.write(f'Match Score: {round(score,2)}%')
 
+        # 🔥 THIS WAS MISSING
+        if score > 75:
+            st.success('Strong Match ✅')
+        elif score > 45:
+            st.warning('Average Match ⚠️')
+        else:
+            st.error('Low Match ❌')
+
         st.subheader('✅ Matched Keywords')
         st.write(matched)
 
