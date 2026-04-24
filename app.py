@@ -10,11 +10,11 @@ st.write('Smart comparison using NLP (TF-IDF + Cosine Similarity)')
 
 def preprocess(text):
     text = text.lower()
-    words = re.findall(r'\b\w+\b', text)
+    words = re.findall(r'\b[a-zA-Z]+\b', text)
     return set(words)
 
 def get_similarity(resume, job):
-    tfidf = TfidfVectorizer()
+    tfidf = TfidfVectorizer(stop_words='english')
     vectors = tfidf.fit_transform([resume, job])
     similarity = cosine_similarity(vectors[0], vectors[1])[0][0]
     return similarity * 100
@@ -40,9 +40,7 @@ if st.button('Analyze'):
         score = get_similarity(resume, job)
 
         st.subheader('📊 Results')
-
         st.progress(int(score))
-
         st.write(f'Match Score: {round(score, 2)}%')
 
         if score > 70:
